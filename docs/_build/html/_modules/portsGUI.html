@@ -1,0 +1,376 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>portsGUI &mdash; Oxford Endpoint Plotter 0.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Oxford Endpoint Plotter
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">EndpointPlotter</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Oxford Endpoint Plotter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>portsGUI</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for portsGUI</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:platform: Windows</span>
+<span class="sd">:synopsis: This module is mostly generated code from QtDesigner. It describes the format of the settings</span>
+<span class="sd">    dialog for editing the port of the ADC.</span>
+<span class="sd">:moduleauthor: Michael Eller &lt;mbe9a@virginia.edu&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtWidgets</span>
+<span class="kn">from</span> <span class="nn">serial.tools</span> <span class="kn">import</span> <span class="n">list_ports_windows</span>
+<span class="kn">from</span> <span class="nn">settings_interface</span> <span class="kn">import</span> <span class="n">save_port_configuration</span><span class="p">,</span> <span class="n">read_port_configuration</span>
+
+
+<div class="viewcode-block" id="Ui_Dialog"><a class="viewcode-back" href="../portsGUI.html#portsGUI.Ui_Dialog">[docs]</a><span class="k">class</span> <span class="nc">Ui_Dialog</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The graphical structure of this *Ui_Dialog* was generated by QtDesigner.</span>
+<span class="sd">    The window allows the user to view available serial ports and choose one.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Ui_Dialog.setupUi"><a class="viewcode-back" href="../portsGUI.html#portsGUI.Ui_Dialog.setupUi">[docs]</a>    <span class="k">def</span> <span class="nf">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Dialog</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function initializes the window by altering the *Dialog* object passed (by reference) to it.</span>
+
+<span class="sd">        :param Dialog: This must be of type PyQt5.QtWidgets.QDialog.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># set window name, size, icon</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;Settings - Serial Port Connection&quot;</span><span class="p">)</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">454</span><span class="p">,</span> <span class="mi">302</span><span class="p">)</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s1">&#39;resources/gear.ico&#39;</span><span class="p">))</span>
+
+        <span class="c1"># make a grid layout</span>
+        <span class="c1"># grid layouts allow the window to be resized easily</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;gridLayout&quot;</span><span class="p">)</span>
+
+        <span class="c1"># the following spacer items organize the objects in the window nicely</span>
+        <span class="n">spacerItem</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacerItem</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">spacerItem1</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacerItem1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># create a save and cancel button, these are built in buttons that emit specific signals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_port_connection_buttons</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_port_connection_buttons</span><span class="o">.</span><span class="n">setOrientation</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_port_connection_buttons</span><span class="o">.</span><span class="n">setStandardButtons</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Cancel</span><span class="o">|</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Save</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_port_connection_buttons</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;settings_port_connection_buttons&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings_port_connection_buttons</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># make the serial port list widget</span>
+        <span class="c1"># it will populate with all the available serial ports</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">listWidget_available_ports</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QListWidget</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">listWidget_available_ports</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;listWidget_available_ports&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">listWidget_available_ports</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># create a label for the list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># make a button to clear the serial port connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;pushButton&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButton</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">)</span>
+
+        <span class="c1"># make a button to rescan the available serial ports</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonScan</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonScan</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;pushButtonScan&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonScan</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonScan</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">populate_list</span><span class="p">)</span>
+
+        <span class="c1"># get the saved serial port if it exists</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">read_port_configuration</span><span class="p">()</span>
+        <span class="c1"># fill the list with the available serial ports</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">populate_list</span><span class="p">()</span>
+        <span class="c1"># highlight the saved option if it exists</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">highlight_port</span><span class="p">()</span>
+
+        <span class="c1"># move the objects over to Dialog and set the text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">retranslateUi</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+
+        <span class="c1"># set what to do when the save button is clicked</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_port_connection_buttons</span><span class="o">.</span><span class="n">accepted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_list_selection</span><span class="p">(</span><span class="n">Dialog</span><span class="p">))</span>
+
+        <span class="c1"># set what to do when the cancel button is hit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_port_connection_buttons</span><span class="o">.</span><span class="n">rejected</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">Dialog</span><span class="o">.</span><span class="n">reject</span><span class="p">)</span>
+
+        <span class="c1"># connect the signals and slots by name</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QMetaObject</span><span class="o">.</span><span class="n">connectSlotsByName</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Ui_Dialog.retranslateUi"><a class="viewcode-back" href="../portsGUI.html#portsGUI.Ui_Dialog.retranslateUi">[docs]</a>    <span class="k">def</span> <span class="nf">retranslateUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Dialog</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function translates the GUI objects of this class to the passed *Dialog* objcect,</span>
+<span class="sd">        then sets the text of the various objects in the window.</span>
+
+<span class="sd">        :param Dialog: This must be of type PyQt5.QtWidgets.QDialog.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># rename the function for readability</span>
+        <span class="n">_translate</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QCoreApplication</span><span class="o">.</span><span class="n">translate</span>
+
+        <span class="c1"># set the window title and button text</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Dialog&quot;</span><span class="p">,</span> <span class="s2">&quot;Settings - Serial Port Connection&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Dialog&quot;</span><span class="p">,</span> <span class="s2">&quot;Reset&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonScan</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Dialog&quot;</span><span class="p">,</span> <span class="s2">&quot;Scan&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Dialog&quot;</span><span class="p">,</span> <span class="s2">&quot;Select from the available COM Ports.</span><span class="se">\n</span><span class="s2">Warning: using an incorrect &quot;</span>
+                                                <span class="s2">&quot;port may cause the program to crash.&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Ui_Dialog.highlight_port"><a class="viewcode-back" href="../portsGUI.html#portsGUI.Ui_Dialog.highlight_port">[docs]</a>    <span class="k">def</span> <span class="nf">highlight_port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function will highlight the saved serial port if it still exists in the list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># search the list for the saved serial port</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ports</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">==</span> <span class="n">p</span><span class="o">.</span><span class="n">device</span><span class="p">:</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">description</span>
+                <span class="k">break</span>
+
+        <span class="c1"># iterate through the list text again and highlight the saved option</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">listWidget_available_ports</span><span class="o">.</span><span class="n">count</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">listWidget_available_ports</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="o">==</span> <span class="n">temp</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">listWidget_available_ports</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">setSelected</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">break</span></div>
+
+<div class="viewcode-block" id="Ui_Dialog.populate_list"><a class="viewcode-back" href="../portsGUI.html#portsGUI.Ui_Dialog.populate_list">[docs]</a>    <span class="k">def</span> <span class="nf">populate_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function currently only works for Windows. It well use the *serial.tools.list_ports_windows.comports()*</span>
+<span class="sd">        function to get all available serial ports. Then it will add the names to the list widget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># clear the list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">listWidget_available_ports</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="c1"># search for all available serial ports and add it to a list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ports</span> <span class="o">=</span> <span class="n">list_ports_windows</span><span class="o">.</span><span class="n">comports</span><span class="p">()</span>
+
+        <span class="c1"># iterate through and add the description text to the list widget</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ports</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QListWidgetItem</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">listWidget_available_ports</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="c1"># highlight the saved port if it exists</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">highlight_port</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Ui_Dialog.save_list_selection"><a class="viewcode-back" href="../portsGUI.html#portsGUI.Ui_Dialog.save_list_selection">[docs]</a>    <span class="k">def</span> <span class="nf">save_list_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Dialog</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function uses the helper function in *settings_interface* to save the selected serial port when</span>
+<span class="sd">        the user hits the save button.</span>
+
+<span class="sd">        :param Dialog: This must be of type PyQt5.QtWidgets.QDialog.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># try to get the text of the selected item</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">listWidget_available_ports</span><span class="o">.</span><span class="n">currentItem</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="c1"># if nothing is selected, set the text to an empty string and continue</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="c1"># iterate through the ports and check if the selected text matches</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ports</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">description</span> <span class="o">==</span> <span class="n">description</span><span class="p">:</span>
+                <span class="c1"># if it matches, get the port text and save it</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">device</span>
+                <span class="n">save_port_configuration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+                <span class="k">break</span>
+        <span class="c1"># close the dialog</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Ui_Dialog.reset"><a class="viewcode-back" href="../portsGUI.html#portsGUI.Ui_Dialog.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function clears the serial port selection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">save_port_configuration</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">listWidget_available_ports</span><span class="o">.</span><span class="n">clearSelection</span><span class="p">()</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">Dialog</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">()</span>
+    <span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_Dialog</span><span class="p">()</span>
+    <span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+    <span class="n">Dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Michael Eller
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

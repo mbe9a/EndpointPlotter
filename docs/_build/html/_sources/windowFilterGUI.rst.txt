@@ -1,0 +1,7 @@
+windowFilterGUI module
+======================
+
+.. automodule:: windowFilterGUI
+   :members:
+   :undoc-members:
+   :show-inheritance:

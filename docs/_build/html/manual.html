@@ -1,0 +1,219 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Manual &mdash; Oxford Endpoint Plotter 0.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="EndpointPlotter" href="modules.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Oxford Endpoint Plotter
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">EndpointPlotter</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Oxford Endpoint Plotter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Manual</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/manual.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="manual">
+<h1>Manual<a class="headerlink" href="#manual" title="Permalink to this headline">¶</a></h1>
+<p>Once you have started the program, the main window will open and should look like this:</p>
+<img alt="_images/mainwindow.png" src="_images/mainwindow.png" />
+<p>To open the plot, all you need to do is click the big ‘Plot’ button. Once open, the animation will look something like this:</p>
+<img alt="_images/plot.png" src="_images/plot.png" />
+<p>You can save the current plot picture as an image, or save all recorded data to a csv file. This will only record the raw data (not the filtered data or the derivative); however, you can calculate those easily from the raw data. If you get the following warning message:</p>
+<img alt="_images/warning.png" src="_images/warning.png" />
+<p>You will need to set the serial port before you can do anything else. This is to stop the program from running without a valid serial port to connect to. Note: If the program crashes, the most likely cause is the serial port connection. Double check that it exists and there aren’t any active connections to it already. To set the serial port, click Menu &gt; Settings &gt; Port Connection. The following dialog will open:</p>
+<img alt="_images/port.png" src="_images/port.png" />
+<p>Select the appropriate serial port. In this case it’s going to be whichever port shows the embedded arduino microcontroller. To clear your selection, click on the ‘Reset’ button. If you wish to rescan the system’s available serial ports, click ‘Scan’. To save your selection, click on the save button. The warning dialog will no longer appear.</p>
+<p>If you want to display the raw voltage without the plot, you can hit the ‘Enable’ checkbox on the main menu. The program will then poll the ADC and update the LCD every 1s. The live plot and LCD can not run at the same time. We are limited to one serial connection to the ADC at a time. Be patient when you click the checkbox, the program halts for 2s to make sure the serial connection is initialized and ready.</p>
+<img alt="_images/mainwindow_lcd.png" src="_images/mainwindow_lcd.png" />
+<p>While the plot is not open, you may alter any of the settings from the menu. They should be pretty self-explanatory. If the user inputs an invalid value, nothing will happen.</p>
+<p>If the plot is open, the user may still alter a few settings dynamically: the window filter and the axes limits. To do this, move the plot window so you can see both the plot and the main window. Then alter the settings you wish to change and save.</p>
+<img alt="_images/dynamic_settings.png" src="_images/dynamic_settings.png" />
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="modules.html" class="btn btn-neutral float-right" title="EndpointPlotter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="introduction.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Michael Eller
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

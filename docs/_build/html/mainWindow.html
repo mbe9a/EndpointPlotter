@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mainWindow module &mdash; Oxford Endpoint Plotter 0.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="plotGUI module" href="plotGUI.html" />
+    <link rel="prev" title="EndpointPlotter" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Oxford Endpoint Plotter
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Manual</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">EndpointPlotter</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">mainWindow module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="plotGUI.html">plotGUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="animation.html">animation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="portsGUI.html">portsGUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sampRateGUI.html">sampRateGUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scaleAxesGUI.html">scaleAxesGUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="windowFilterGUI.html">windowFilterGUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings_interface.html">settings_interface module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Oxford Endpoint Plotter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">EndpointPlotter</a> &raquo;</li>
+        
+      <li>mainWindow module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/mainWindow.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-mainWindow">
+<span id="mainwindow-module"></span><h1>mainWindow module<a class="headerlink" href="#module-mainWindow" title="Permalink to this headline">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">platform</dt>
+<dd class="field-odd"><p>Unix, Windows</p>
+</dd>
+<dt class="field-even">synopsis</dt>
+<dd class="field-even"><p>This is the main module. Run this file to start the GUI.</p>
+</dd>
+<dt class="field-odd">moduleauthor</dt>
+<dd class="field-odd"><p>Michael Eller &lt;<a class="reference external" href="mailto:mbe9a&#37;&#52;&#48;virginia&#46;edu">mbe9a<span>&#64;</span>virginia<span>&#46;</span>edu</a>&gt;</p>
+</dd>
+</dl>
+<dl class="class">
+<dt id="mainWindow.Ui_MainWindow">
+<em class="property">class </em><code class="sig-prename descclassname">mainWindow.</code><code class="sig-name descname">Ui_MainWindow</code><a class="reference internal" href="_modules/mainWindow.html#Ui_MainWindow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mainWindow.Ui_MainWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The graphical structure of <em>Ui_MainWindow</em> was generated by QtDesigner. The window contains a settings menu,
+LCD display, and a button to launch a live plot.</p>
+<dl class="method">
+<dt id="mainWindow.Ui_MainWindow.setupUi">
+<code class="sig-name descname">setupUi</code><span class="sig-paren">(</span><em class="sig-param">MainWindow</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainWindow.html#Ui_MainWindow.setupUi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mainWindow.Ui_MainWindow.setupUi" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function initializes the window by altering the <em>MainWindow</em> object passed (by reference) to it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>MainWindow</strong> – this must be of type PyQt5.QtWidgets.QMainWindow</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mainWindow.Ui_MainWindow.retranslateUi">
+<code class="sig-name descname">retranslateUi</code><span class="sig-paren">(</span><em class="sig-param">MainWindow</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainWindow.html#Ui_MainWindow.retranslateUi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mainWindow.Ui_MainWindow.retranslateUi" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function translates the GUI objects of this class to the passed <em>MainWindow</em> objcect,
+then sets the text of the various objects in the main window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>MainWindow</strong> – this must be of type PyQt5.QtWidgets.QMainWindow</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mainWindow.Ui_MainWindow.check_port">
+<code class="sig-name descname">check_port</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainWindow.html#Ui_MainWindow.check_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mainWindow.Ui_MainWindow.check_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks to see if the user has set a port. If not, the user will not be able to start the live plot or LCD.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mainWindow.Ui_MainWindow.open_settings_filter">
+<code class="sig-name descname">open_settings_filter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainWindow.html#Ui_MainWindow.open_settings_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mainWindow.Ui_MainWindow.open_settings_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function spawns an instance of <em>windowFilterGUI.Ui_Dialog</em>. This is triggered by
+clicking Menu &gt; Settings &gt; Window Filter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mainWindow.Ui_MainWindow.open_settings_sample_rate">
+<code class="sig-name descname">open_settings_sample_rate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainWindow.html#Ui_MainWindow.open_settings_sample_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mainWindow.Ui_MainWindow.open_settings_sample_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function spawns an instance of <em>sampRateGUI.Ui_Dialog</em>. This is triggered by
+clicking Menu &gt; Settings &gt; Sample Rate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mainWindow.Ui_MainWindow.open_settings_scale_axes">
+<code class="sig-name descname">open_settings_scale_axes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainWindow.html#Ui_MainWindow.open_settings_scale_axes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mainWindow.Ui_MainWindow.open_settings_scale_axes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function spawns an instance of <em>scaleAxesGUI.Ui_Dialog</em>. This is triggered by
+clicking Menu &gt; Settings &gt; Scale Axes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mainWindow.Ui_MainWindow.open_settings_port">
+<code class="sig-name descname">open_settings_port</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainWindow.html#Ui_MainWindow.open_settings_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mainWindow.Ui_MainWindow.open_settings_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function spawns an instance of <em>portsGUI.Ui_Dialog</em>. This is triggered by
+clicking Menu &gt; Settings &gt; Port Connection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mainWindow.Ui_MainWindow.show_plot">
+<code class="sig-name descname">show_plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainWindow.html#Ui_MainWindow.show_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mainWindow.Ui_MainWindow.show_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function spawns an instance of <em>plotGUI.Ui_Dialog</em>. It is triggered by
+the user clicking the large ‘Plot’ button.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mainWindow.Ui_MainWindow.toggle_timer">
+<code class="sig-name descname">toggle_timer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainWindow.html#Ui_MainWindow.toggle_timer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mainWindow.Ui_MainWindow.toggle_timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is triggered on every click of the check box. If the check box is enabled and
+the user has set the serial port, this function enables a timer that will update the LCD every 1s.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mainWindow.Ui_MainWindow.update_display">
+<code class="sig-name descname">update_display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainWindow.html#Ui_MainWindow.update_display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mainWindow.Ui_MainWindow.update_display" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will execute on the 1s timer’s timeout. It will then request the most recent ADC value
+from the serial port and display the corrected value on the LCD.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtWidgets</span>
+<span class="kn">from</span> <span class="nn">mainWindow</span> <span class="kn">import</span> <span class="n">Ui_MainWindow</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+<span class="n">MainWindow</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
+<span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_MainWindow</span><span class="p">()</span>
+<span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">)</span>
+<span class="n">MainWindow</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="plotGUI.html" class="btn btn-neutral float-right" title="plotGUI module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="modules.html" class="btn btn-neutral float-left" title="EndpointPlotter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Michael Eller
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

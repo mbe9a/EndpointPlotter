@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>plotGUI module &mdash; Oxford Endpoint Plotter 0.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="animation module" href="animation.html" />
+    <link rel="prev" title="mainWindow module" href="mainWindow.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Oxford Endpoint Plotter
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">EndpointPlotter</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mainWindow.html">mainWindow module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">plotGUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="animation.html">animation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="portsGUI.html">portsGUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sampRateGUI.html">sampRateGUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scaleAxesGUI.html">scaleAxesGUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="windowFilterGUI.html">windowFilterGUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings_interface.html">settings_interface module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Oxford Endpoint Plotter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">EndpointPlotter</a> &raquo;</li>
+        
+      <li>plotGUI module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/plotGUI.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-plotGUI">
+<span id="plotgui-module"></span><h1>plotGUI module<a class="headerlink" href="#module-plotGUI" title="Permalink to this headline">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">platform</dt>
+<dd class="field-odd"><p>Unix, Windows</p>
+</dd>
+<dt class="field-even">synopsis</dt>
+<dd class="field-even"><p>This module contains generated code from QtDesigner and custom code for the GUI containing the live plot.</p>
+</dd>
+<dt class="field-odd">moduleauthor</dt>
+<dd class="field-odd"><p>Michael Eller &lt;<a class="reference external" href="mailto:mbe9a&#37;&#52;&#48;virginia&#46;edu">mbe9a<span>&#64;</span>virginia<span>&#46;</span>edu</a>&gt;</p>
+</dd>
+</dl>
+<dl class="data">
+<dt id="plotGUI.stop">
+<code class="sig-prename descclassname">plotGUI.</code><code class="sig-name descname">stop</code><em class="property"> = 0</em><a class="headerlink" href="#plotGUI.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>This global member is used to create a soft stop signal for a plotGUI.Ui_Dialog object</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="plotGUI.initial_hash">
+<code class="sig-prename descclassname">plotGUI.</code><code class="sig-name descname">initial_hash</code><em class="property"> = 0</em><a class="headerlink" href="#plotGUI.initial_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>initial_hash</em> is set on the creation of a plotGUI.Ui_Dialog object.
+Hashing is used to detect a change in the settings files.
+The program will periodically hash the settings files and compare with initial_hash.
+If a change has been detected, plotGUI.Ui_dialog.update_plot() will be called.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="plotGUI.MyThread">
+<em class="property">class </em><code class="sig-prename descclassname">plotGUI.</code><code class="sig-name descname">MyThread</code><span class="sig-paren">(</span><em class="sig-param">callback1</em>, <em class="sig-param">callback2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plotGUI.html#MyThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.MyThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtCore.QThread</span></code></p>
+<p>This is a simple class to implement a QThread object and specify its <em>run()</em> method.</p>
+<dl class="method">
+<dt id="plotGUI.MyThread.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">callback1</em>, <em class="sig-param">callback2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plotGUI.html#MyThread.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.MyThread.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the QThread and set the callback stubs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>callback1</strong> – Callback function for the thread to execute within <em>dataSendLoop()</em>. T
+his callback must send a new data point to the plot.</p></li>
+<li><p><strong>callback2</strong> – Callback function triggered in <em>dataSendLoop()</em>
+and is responsible for triggering <em>update_plot()</em>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="plotGUI.MyThread.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plotGUI.html#MyThread.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.MyThread.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>This overrides the parent <em>run()</em> method. Thread will run the infinite loop in <em>dataSendLoop()</em>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="plotGUI.Ui_Dialog">
+<em class="property">class </em><code class="sig-prename descclassname">plotGUI.</code><code class="sig-name descname">Ui_Dialog</code><a class="reference internal" href="_modules/plotGUI.html#Ui_Dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.Ui_Dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The graphical structure of this <em>Ui_Dialog</em> was generated by QtDesigner.
+The window contains a few buttons and an embedded matplotlib animation.</p>
+<dl class="method">
+<dt id="plotGUI.Ui_Dialog.setupUi">
+<code class="sig-name descname">setupUi</code><span class="sig-paren">(</span><em class="sig-param">Dialog</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plotGUI.html#Ui_Dialog.setupUi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.Ui_Dialog.setupUi" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function initializes the window by altering the <em>Dialog</em> object passed (by reference) to it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Dialog</strong> – This must be of type PyQt5.QtWidgets.QDialog.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="plotGUI.Ui_Dialog.retranslateUi">
+<code class="sig-name descname">retranslateUi</code><span class="sig-paren">(</span><em class="sig-param">Dialog</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plotGUI.html#Ui_Dialog.retranslateUi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.Ui_Dialog.retranslateUi" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function translates the GUI objects of this class to the passed <em>Dialog</em> objcect,
+then sets the text of the various objects in the window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Dialog</strong> – This must be of type PyQt5.QtWidgets.QDialog.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="plotGUI.Ui_Dialog.addData_callbackFunc">
+<code class="sig-name descname">addData_callbackFunc</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plotGUI.html#Ui_Dialog.addData_callbackFunc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.Ui_Dialog.addData_callbackFunc" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function adds the most recent ADC value to the buffer in the animation object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> – number from the serial port. This is ‘emitted’ from <em>mySrc</em> in <em>dataSendLoot()</em>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="plotGUI.Ui_Dialog.update_plot">
+<code class="sig-name descname">update_plot</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plotGUI.html#Ui_Dialog.update_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.Ui_Dialog.update_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function calls a series of functions within the animation object to update the figure axes and filtering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> – the format of this function requires <em>value</em> to be present. It is unused in this function.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="plotGUI.Ui_Dialog.close">
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plotGUI.html#Ui_Dialog.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.Ui_Dialog.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function creates a controlled and soft close.
+The figure and serial must be closed before the window is allowed to close.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="plotGUI.Ui_Dialog.save_image">
+<code class="sig-name descname">save_image</code><span class="sig-paren">(</span><em class="sig-param">Dialog</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plotGUI.html#Ui_Dialog.save_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.Ui_Dialog.save_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the current plot canvas as an image file.
+It will open a save dialog in order to get the desired file path from the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Dialog</strong> – The same PyQt5.QtWidgets.QDialog object passed to the PlotGUI.Ui_Dialog.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="plotGUI.Ui_Dialog.save_csv">
+<code class="sig-name descname">save_csv</code><span class="sig-paren">(</span><em class="sig-param">Dialog</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plotGUI.html#Ui_Dialog.save_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.Ui_Dialog.save_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function saves all recorded data in a simple format.
+Opens a save file dialog to get the desired file path from the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Dialog</strong> – The same PyQt5.QtWidgets.QDialog object passed to the PlotGUI.Ui_Dialog.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="plotGUI.Communicate">
+<em class="property">class </em><code class="sig-prename descclassname">plotGUI.</code><code class="sig-name descname">Communicate</code><a class="reference internal" href="_modules/plotGUI.html#Communicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.Communicate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtCore.QObject</span></code></p>
+<p>In order to cleanly send data throughout the different processes within the GUI,
+a thread-safe mechanism must be used. This is an extension of a built-in pyqt signal.
+It can be connected to a slot (function) that will trigger when the signal emits a value.</p>
+<dl class="attribute">
+<dt id="plotGUI.Communicate.data_signal">
+<code class="sig-name descname">data_signal</code><a class="headerlink" href="#plotGUI.Communicate.data_signal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="plotGUI.dataSendLoop">
+<code class="sig-prename descclassname">plotGUI.</code><code class="sig-name descname">dataSendLoop</code><span class="sig-paren">(</span><em class="sig-param">addData_callbackFunc</em>, <em class="sig-param">update_plot</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plotGUI.html#dataSendLoop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.dataSendLoop" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the infinite loop executed by a separate thread. Based on the sample rate set by the user,
+it will periodically poll a new value over the serial port and send it to the animation through a
+signal-slot mechanism. This function is also responsible for re-hashing the settings files and
+checking for necessary updates to the plot axes and filtering. If a change is detected, it will
+trigger the <em>update_plot()</em> function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>addData_callbackFunc</strong> – slot function for adding data to the plot.</p></li>
+<li><p><strong>update_plot</strong> – slot function for updating the plot filtering and axes.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="plotGUI.get_interval">
+<code class="sig-prename descclassname">plotGUI.</code><code class="sig-name descname">get_interval</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plotGUI.html#get_interval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.get_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a helper function to calculate the time between samples.
+It reads the sample rate value from the settings file and takes the inverse.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the interval in seconds.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="plotGUI.check_for_change">
+<code class="sig-prename descclassname">plotGUI.</code><code class="sig-name descname">check_for_change</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plotGUI.html#check_for_change"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.check_for_change" title="Permalink to this definition">¶</a></dt>
+<dd><p>If a change was detected return True. If no change, return False.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="plotGUI.get_hash">
+<code class="sig-prename descclassname">plotGUI.</code><code class="sig-name descname">get_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plotGUI.html#get_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plotGUI.get_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function uses <em>hashlib</em> to generate an md5 hash of the settings file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the hash of the settings file</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="animation.html" class="btn btn-neutral float-right" title="animation module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mainWindow.html" class="btn btn-neutral float-left" title="mainWindow module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Michael Eller
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

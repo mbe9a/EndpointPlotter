@@ -1,0 +1,7 @@
+plotGUI module
+==============
+
+.. automodule:: plotGUI
+   :members:
+   :undoc-members:
+   :show-inheritance:

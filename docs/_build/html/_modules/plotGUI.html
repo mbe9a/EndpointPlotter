@@ -1,0 +1,582 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>plotGUI &mdash; Oxford Endpoint Plotter 0.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Oxford Endpoint Plotter
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">EndpointPlotter</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Oxford Endpoint Plotter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>plotGUI</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for plotGUI</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:platform: Unix, Windows</span>
+<span class="sd">:synopsis: This module contains generated code from QtDesigner and custom code for the GUI containing the live plot.</span>
+<span class="sd">:moduleauthor: Michael Eller &lt;mbe9a@virginia.edu&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtWidgets</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">QThread</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="n">QDialog</span>
+<span class="kn">from</span> <span class="nn">animation</span> <span class="kn">import</span> <span class="n">CustomFigCanvas</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="n">QFileDialog</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">settings_interface</span> <span class="kn">import</span> <span class="n">read_port_configuration</span><span class="p">,</span> <span class="n">get_sample_rate</span>
+<span class="kn">import</span> <span class="nn">serial</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+
+<span class="c1">#: Member *_serial_port* is a global variable representing the serial connection to the ADC.</span>
+<span class="c1">#: It will be opened when plotGUI.Ui_Dialog is initialized.</span>
+<span class="n">_serial_port</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">(</span><span class="n">baudrate</span><span class="o">=</span><span class="mi">9600</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1">#: This global member is used to create a soft stop signal for a plotGUI.Ui_Dialog object</span>
+<span class="n">stop</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1">#: *initial_hash* is set on the creation of a plotGUI.Ui_Dialog object.</span>
+<span class="c1">#: Hashing is used to detect a change in the settings files.</span>
+<span class="c1">#: The program will periodically hash the settings files and compare with initial_hash.</span>
+<span class="c1">#: If a change has been detected, plotGUI.Ui_dialog.update_plot() will be called.</span>
+<span class="n">initial_hash</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+<div class="viewcode-block" id="MyThread"><a class="viewcode-back" href="../plotGUI.html#plotGUI.MyThread">[docs]</a><span class="k">class</span> <span class="nc">MyThread</span><span class="p">(</span><span class="n">QThread</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a simple class to implement a QThread object and specify its *run()* method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MyThread.__init__"><a class="viewcode-back" href="../plotGUI.html#plotGUI.MyThread.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback1</span><span class="p">,</span> <span class="n">callback2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the QThread and set the callback stubs.</span>
+
+<span class="sd">        :param callback1: Callback function for the thread to execute within *dataSendLoop()*. T</span>
+<span class="sd">                his callback must send a new data point to the plot.</span>
+<span class="sd">        :param callback2: Callback function triggered in *dataSendLoop()*</span>
+<span class="sd">                and is responsible for triggering *update_plot()*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">QThread</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">callback1</span> <span class="o">=</span> <span class="n">callback1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">callback2</span> <span class="o">=</span> <span class="n">callback2</span></div>
+
+    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Windows does not play well with threads. If you kill a thread in Windows, the main thread will crash.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MyThread.run"><a class="viewcode-back" href="../plotGUI.html#plotGUI.MyThread.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This overrides the parent *run()* method. Thread will run the infinite loop in *dataSendLoop()*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dataSendLoop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">callback1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback2</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Ui_Dialog"><a class="viewcode-back" href="../plotGUI.html#plotGUI.Ui_Dialog">[docs]</a><span class="k">class</span> <span class="nc">Ui_Dialog</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The graphical structure of this *Ui_Dialog* was generated by QtDesigner.</span>
+<span class="sd">    The window contains a few buttons and an embedded matplotlib animation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Ui_Dialog.setupUi"><a class="viewcode-back" href="../plotGUI.html#plotGUI.Ui_Dialog.setupUi">[docs]</a>    <span class="k">def</span> <span class="nf">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Dialog</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function initializes the window by altering the *Dialog* object passed (by reference) to it.</span>
+
+<span class="sd">        :param Dialog: This must be of type PyQt5.QtWidgets.QDialog.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># get _serial_port from global context</span>
+        <span class="k">global</span> <span class="n">_serial_port</span>
+        <span class="c1"># get the current serial port setting (string)</span>
+        <span class="n">port</span> <span class="o">=</span> <span class="n">read_port_configuration</span><span class="p">()</span>
+        <span class="c1"># set the port and open it, wait 2s for the microcontroller to settle</span>
+        <span class="n">_serial_port</span><span class="o">.</span><span class="n">setPort</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+        <span class="n">_serial_port</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># get the initial hash value from global context</span>
+        <span class="k">global</span> <span class="n">initial_hash</span>
+        <span class="c1"># set it here</span>
+        <span class="n">initial_hash</span> <span class="o">=</span> <span class="n">get_hash</span><span class="p">()</span>
+
+        <span class="c1"># set window name, size, icon</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;Dialog&quot;</span><span class="p">)</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">700</span><span class="p">)</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s1">&#39;resources/laser.ico&#39;</span><span class="p">))</span>
+
+        <span class="c1"># make a grid layout</span>
+        <span class="c1"># grid layouts allow the window to be resized easily</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;gridLayout&quot;</span><span class="p">)</span>
+
+        <span class="c1"># create a button to allow the user to save the plot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton_save_image</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton_save_image</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;pushButton_save_image&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButton_save_image</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># connect the button click to the save_image() function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton_save_image</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_image</span><span class="p">(</span><span class="n">Dialog</span><span class="p">))</span>
+
+        <span class="c1"># create a button to allow the user to save the data as csv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton_save_csv</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton_save_csv</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;pushButton_save_csv&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButton_save_csv</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># connect the button click to the save_csv() function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton_save_csv</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_csv</span><span class="p">(</span><span class="n">Dialog</span><span class="p">))</span>
+
+        <span class="c1"># create a close button</span>
+        <span class="c1"># This window needs a controlled or &#39;soft&#39; close</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;pushButton&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButton</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># xonnect the button click to the *close()* function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
+
+        <span class="c1"># This is a hidden button that will actually close the window.</span>
+        <span class="c1"># This is automatically &#39;clicked&#39; after *close()* is finished.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonHIDDEN</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonHIDDEN</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;pushButtonHIDDEN&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonHIDDEN</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">Dialog</span><span class="o">.</span><span class="n">reject</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonHIDDEN</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># create the animation object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">myFig</span> <span class="o">=</span> <span class="n">CustomFigCanvas</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">myFig</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+        <span class="c1"># Create the thread and start it.</span>
+        <span class="c1"># The thread will execute the infinite loop in dataSendLoop()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span> <span class="n">MyThread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">addData_callbackFunc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_plot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+        <span class="c1"># the regular close button will make the program crash for unknown reasons, disable it</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">setWindowFlag</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WindowCloseButtonHint</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># this function translates all the objects created here and sets all the text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">retranslateUi</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+
+        <span class="c1"># make sure we connect *Dialog*&#39;s signals to their corresponding slots</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QMetaObject</span><span class="o">.</span><span class="n">connectSlotsByName</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Ui_Dialog.retranslateUi"><a class="viewcode-back" href="../plotGUI.html#plotGUI.Ui_Dialog.retranslateUi">[docs]</a>    <span class="k">def</span> <span class="nf">retranslateUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Dialog</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function translates the GUI objects of this class to the passed *Dialog* objcect,</span>
+<span class="sd">        then sets the text of the various objects in the window.</span>
+
+<span class="sd">        :param Dialog: This must be of type PyQt5.QtWidgets.QDialog.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># rename the function for readability</span>
+        <span class="n">_translate</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QCoreApplication</span><span class="o">.</span><span class="n">translate</span>
+
+        <span class="c1"># set the window title and button text</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Dialog&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton_save_csv</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Dialog&quot;</span><span class="p">,</span> <span class="s2">&quot;Save CSV&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton_save_image</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Dialog&quot;</span><span class="p">,</span> <span class="s2">&quot;Save Image&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Dialog&quot;</span><span class="p">,</span> <span class="s2">&quot;Close&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Ui_Dialog.addData_callbackFunc"><a class="viewcode-back" href="../plotGUI.html#plotGUI.Ui_Dialog.addData_callbackFunc">[docs]</a>    <span class="k">def</span> <span class="nf">addData_callbackFunc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function adds the most recent ADC value to the buffer in the animation object.</span>
+
+<span class="sd">        :param value: number from the serial port. This is &#39;emitted&#39; from *mySrc* in *dataSendLoot()*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">myFig</span><span class="o">.</span><span class="n">addData</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Ui_Dialog.update_plot"><a class="viewcode-back" href="../plotGUI.html#plotGUI.Ui_Dialog.update_plot">[docs]</a>    <span class="k">def</span> <span class="nf">update_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function calls a series of functions within the animation object to update the figure axes and filtering.</span>
+
+<span class="sd">        :param value: the format of this function requires *value* to be present. It is unused in this function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># update the number of samples to keep in the moving average filter and update the lines accordingly</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">myFig</span><span class="o">.</span><span class="n">update_window</span><span class="p">()</span>
+        <span class="c1"># update the range of the x-axis, add zeros if necessary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">myFig</span><span class="o">.</span><span class="n">update_xlim</span><span class="p">()</span>
+        <span class="c1"># update the range of the y-axis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">myFig</span><span class="o">.</span><span class="n">update_ylim</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Ui_Dialog.close"><a class="viewcode-back" href="../plotGUI.html#plotGUI.Ui_Dialog.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function creates a controlled and soft close.</span>
+<span class="sd">        The figure and serial must be closed before the window is allowed to close.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># the following line is essential in order to have the main window</span>
+        <span class="c1"># stay alive after closing this dialog. Without removing the canvas</span>
+        <span class="c1"># widget, the entire program crashes.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">myFig</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">myFig</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="c1"># get the _serial_port from global context</span>
+        <span class="k">global</span> <span class="n">_serial_port</span>
+        <span class="c1"># get the stop variable from global context</span>
+        <span class="k">global</span> <span class="n">stop</span>
+
+        <span class="c1"># set the stop variable so the program knows it needs to close</span>
+        <span class="c1"># this will allow the thread to exit the infinite loop in dataSendLoop()</span>
+        <span class="n">stop</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># close the _serial_port</span>
+        <span class="n">_serial_port</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="c1"># click the hidden close button that actually closes the window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonHIDDEN</span><span class="o">.</span><span class="n">click</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Ui_Dialog.save_image"><a class="viewcode-back" href="../plotGUI.html#plotGUI.Ui_Dialog.save_image">[docs]</a>    <span class="k">def</span> <span class="nf">save_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Dialog</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves the current plot canvas as an image file.</span>
+<span class="sd">        It will open a save dialog in order to get the desired file path from the user.</span>
+
+<span class="sd">        :param Dialog: The same PyQt5.QtWidgets.QDialog object passed to the PlotGUI.Ui_Dialog.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># easy way to open a save file dialog</span>
+        <span class="c1"># returns the file path as a string</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span><span class="n">Dialog</span><span class="p">,</span> <span class="s1">&#39;Save Image As&#39;</span><span class="p">,</span>
+                                            <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">),</span> <span class="s1">&#39;Documents&#39;</span><span class="p">)),</span>
+                                            <span class="s1">&#39;Image Files (*.png *.jpg *.jpeg)&#39;</span><span class="p">)</span>
+
+        <span class="c1"># if the user canceled, exit</span>
+        <span class="k">if</span> <span class="n">fname</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># else, save the figure at the specified file path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">myFig</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fname</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Ui_Dialog.save_csv"><a class="viewcode-back" href="../plotGUI.html#plotGUI.Ui_Dialog.save_csv">[docs]</a>    <span class="k">def</span> <span class="nf">save_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Dialog</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function saves all recorded data in a simple format.</span>
+<span class="sd">        Opens a save file dialog to get the desired file path from the user.</span>
+
+<span class="sd">        :param Dialog: The same PyQt5.QtWidgets.QDialog object passed to the PlotGUI.Ui_Dialog.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># easy way to open a save file dialog</span>
+        <span class="c1"># returns the file path as a string</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span><span class="n">Dialog</span><span class="p">,</span> <span class="s1">&#39;Save Data&#39;</span><span class="p">,</span>
+                                            <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">),</span> <span class="s1">&#39;Documents&#39;</span><span class="p">)),</span>
+                                            <span class="s1">&#39;CSV Files (*.csv)&#39;</span><span class="p">)</span>
+
+        <span class="c1"># if the user canceled, exit</span>
+        <span class="k">if</span> <span class="n">fname</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># else, save the data at the specified file path</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+            <span class="n">fieldnames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">,</span> <span class="s1">&#39;Signal (V)&#39;</span><span class="p">]</span>
+            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictWriter</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">fieldnames</span><span class="p">,</span>
+                                    <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">writeheader</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">myFig</span><span class="o">.</span><span class="n">all</span><span class="p">)):</span>
+                <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">({</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;Signal (V)&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">myFig</span><span class="o">.</span><span class="n">all</span><span class="p">[</span><span class="n">x</span><span class="p">]})</span></div></div>
+
+
+<span class="c1"># You need to setup a signal slot mechanism, to</span>
+<span class="c1"># send data to your GUI in a thread-safe way.</span>
+<span class="c1"># Believe me, if you don&#39;t do this right, things</span>
+<span class="c1"># go very very wrong.</span>
+<div class="viewcode-block" id="Communicate"><a class="viewcode-back" href="../plotGUI.html#plotGUI.Communicate">[docs]</a><span class="k">class</span> <span class="nc">Communicate</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    In order to cleanly send data throughout the different processes within the GUI,</span>
+<span class="sd">    a thread-safe mechanism must be used. This is an extension of a built-in pyqt signal.</span>
+<span class="sd">    It can be connected to a slot (function) that will trigger when the signal emits a value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data_signal</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dataSendLoop"><a class="viewcode-back" href="../plotGUI.html#plotGUI.dataSendLoop">[docs]</a><span class="k">def</span> <span class="nf">dataSendLoop</span><span class="p">(</span><span class="n">addData_callbackFunc</span><span class="p">,</span> <span class="n">update_plot</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the infinite loop executed by a separate thread. Based on the sample rate set by the user,</span>
+<span class="sd">    it will periodically poll a new value over the serial port and send it to the animation through a</span>
+<span class="sd">    signal-slot mechanism. This function is also responsible for re-hashing the settings files and</span>
+<span class="sd">    checking for necessary updates to the plot axes and filtering. If a change is detected, it will</span>
+<span class="sd">    trigger the *update_plot()* function.</span>
+
+<span class="sd">    :param addData_callbackFunc: slot function for adding data to the plot.</span>
+<span class="sd">    :param update_plot: slot function for updating the plot filtering and axes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup the signal-slot mechanism.</span>
+    <span class="c1"># This signal is responsible for adding new data to the animation</span>
+    <span class="n">mySrc</span> <span class="o">=</span> <span class="n">Communicate</span><span class="p">()</span>
+    <span class="n">mySrc</span><span class="o">.</span><span class="n">data_signal</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">addData_callbackFunc</span><span class="p">)</span>
+
+    <span class="c1"># This signal is responsible for updating the plot window if a change has been detected</span>
+    <span class="n">mySrc2</span> <span class="o">=</span> <span class="n">Communicate</span><span class="p">()</span>
+    <span class="n">mySrc2</span><span class="o">.</span><span class="n">data_signal</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">update_plot</span><span class="p">)</span>
+
+    <span class="c1"># this gets the sample rate from the settings file and calculates the delay for the data collection loop</span>
+    <span class="n">interval</span> <span class="o">=</span> <span class="n">get_interval</span><span class="p">()</span>
+
+    <span class="c1"># enter infinite loop</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+
+        <span class="c1"># get stop variable from global context</span>
+        <span class="k">global</span> <span class="n">stop</span>
+
+        <span class="c1"># check if the user wants to exit</span>
+        <span class="c1"># if so, exit the while loop so this thread can stop and we can do garbage collection later</span>
+        <span class="k">if</span> <span class="n">stop</span><span class="p">:</span>
+            <span class="n">stop</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">break</span>
+
+        <span class="c1"># check if the user has changed any of the settings</span>
+        <span class="c1"># if so, trigger signal-slot mechanism in mySrc2 and update_plot()</span>
+        <span class="k">if</span> <span class="n">check_for_change</span><span class="p">():</span>
+            <span class="n">mySrc2</span><span class="o">.</span><span class="n">data_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># wait the specified interval</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
+
+        <span class="c1"># get _serial_port from global context</span>
+        <span class="k">global</span> <span class="n">_serial_port</span>
+
+        <span class="c1"># request a new value from the ADC</span>
+        <span class="n">_serial_port</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="c1"># read from the serial port to get the value</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">_serial_port</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+        <span class="c1"># emit a signal from mySrc, which will execute addData_callbackFunc(val)</span>
+        <span class="n">mySrc</span><span class="o">.</span><span class="n">data_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">val</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_interval"><a class="viewcode-back" href="../plotGUI.html#plotGUI.get_interval">[docs]</a><span class="k">def</span> <span class="nf">get_interval</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a helper function to calculate the time between samples.</span>
+<span class="sd">    It reads the sample rate value from the settings file and takes the inverse.</span>
+
+<span class="sd">    :return: the interval in seconds.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">samp_rate</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">get_sample_rate</span><span class="p">())</span>
+    <span class="n">interval</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">samp_rate</span>
+    <span class="k">return</span> <span class="n">interval</span></div>
+
+
+<div class="viewcode-block" id="check_for_change"><a class="viewcode-back" href="../plotGUI.html#plotGUI.check_for_change">[docs]</a><span class="k">def</span> <span class="nf">check_for_change</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    If a change was detected return True. If no change, return False.</span>
+
+<span class="sd">    :return: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># hash the settings file</span>
+    <span class="n">new_hash</span> <span class="o">=</span> <span class="n">get_hash</span><span class="p">()</span>
+
+    <span class="c1"># get the initial hash from global context</span>
+    <span class="k">global</span> <span class="n">initial_hash</span>
+
+    <span class="c1"># check if they are the same or not</span>
+    <span class="k">if</span> <span class="n">new_hash</span> <span class="o">==</span> <span class="n">initial_hash</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">initial_hash</span> <span class="o">=</span> <span class="n">new_hash</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="get_hash"><a class="viewcode-back" href="../plotGUI.html#plotGUI.get_hash">[docs]</a><span class="k">def</span> <span class="nf">get_hash</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function uses *hashlib* to generate an md5 hash of the settings file.</span>
+
+<span class="sd">    :return: the hash of the settings file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># create hash object</span>
+    <span class="n">hasher</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
+
+    <span class="c1"># open the settings file and read it into the hash buffer</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;resources/plot_configuration.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">myfile</span><span class="p">:</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">myfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+        <span class="n">hasher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+
+    <span class="c1"># generate the hashcode and return it</span>
+    <span class="k">return</span> <span class="n">hasher</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">Dialog</span> <span class="o">=</span> <span class="n">QDialog</span><span class="p">()</span>
+    <span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_Dialog</span><span class="p">()</span>
+    <span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+    <span class="n">Dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Michael Eller
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

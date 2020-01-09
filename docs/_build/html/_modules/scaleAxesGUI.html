@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>scaleAxesGUI &mdash; Oxford Endpoint Plotter 0.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Oxford Endpoint Plotter
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">EndpointPlotter</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Oxford Endpoint Plotter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>scaleAxesGUI</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for scaleAxesGUI</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:platform: Unix, Windows</span>
+<span class="sd">:synopsis: This module is mostly generated code from QtDesigner. It describes the format of the settings</span>
+<span class="sd">    dialog for editing the limits of the plot axes.</span>
+<span class="sd">:moduleauthor: Michael Eller &lt;mbe9a@virginia.edu&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtWidgets</span>
+<span class="kn">from</span> <span class="nn">settings_interface</span> <span class="kn">import</span> <span class="n">set_x_axis_size</span><span class="p">,</span> <span class="n">get_x_axis_size</span><span class="p">,</span> <span class="n">set_y_axis_min</span><span class="p">,</span> <span class="n">get_y_axis_min</span><span class="p">,</span> <span class="n">set_y_axis_max</span><span class="p">,</span> <span class="n">get_y_axis_max</span>
+
+
+<div class="viewcode-block" id="Ui_Dialog"><a class="viewcode-back" href="../scaleAxesGUI.html#scaleAxesGUI.Ui_Dialog">[docs]</a><span class="k">class</span> <span class="nc">Ui_Dialog</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The graphical structure of this *Ui_Dialog* was generated by QtDesigner.</span>
+<span class="sd">    The window allows the user to set the limits of the plot axes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Ui_Dialog.setupUi"><a class="viewcode-back" href="../scaleAxesGUI.html#scaleAxesGUI.Ui_Dialog.setupUi">[docs]</a>    <span class="k">def</span> <span class="nf">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Dialog</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function initializes the window by altering the *Dialog* object passed (by reference) to it.</span>
+
+<span class="sd">        :param Dialog: This must be of type PyQt5.QtWidgets.QDialog.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># set window name, icon</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;Settings - Scale Axes&quot;</span><span class="p">)</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s1">&#39;resources/gear.ico&#39;</span><span class="p">))</span>
+
+        <span class="c1"># make a grid layout</span>
+        <span class="c1"># grid layouts allow the window to be resized easily</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;gridLayout&quot;</span><span class="p">)</span>
+
+        <span class="c1"># create y-axis maximum input box</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yaxis_max_input</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDoubleSpinBox</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yaxis_max_input</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="mi">70</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yaxis_max_input</span><span class="o">.</span><span class="n">setMinimum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yaxis_max_input</span><span class="o">.</span><span class="n">setSingleStep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ymax</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">get_y_axis_max</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yaxis_max_input</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">ymax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yaxis_max_input</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;yaxis_max_input&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yaxis_max_input</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># create y-axis minimum input box</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yaxis_min_input</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDoubleSpinBox</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yaxis_min_input</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="mf">69.9</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yaxis_min_input</span><span class="o">.</span><span class="n">setMinimum</span><span class="p">(</span><span class="o">-</span><span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yaxis_min_input</span><span class="o">.</span><span class="n">setSingleStep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ymin</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">get_y_axis_min</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yaxis_min_input</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">ymin</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yaxis_min_input</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;yaxis_min_input&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yaxis_min_input</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># the following spacer items organize the objects in the window nicely</span>
+        <span class="n">spacerItem</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacerItem</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">spacerItem1</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacerItem1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">spacerItem2</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacerItem2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">spacerItem3</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacerItem3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">spacerItem4</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacerItem4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">spacerItem5</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacerItem5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">spacerItem6</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacerItem6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># create a labels for the input boxes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_2</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_2</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;label_2&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_3</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_3</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;label_3&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># create the box for the x-axis size input</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xaxis_scale_input</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpinBox</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xaxis_scale_input</span><span class="o">.</span><span class="n">setMinimum</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xaxis_scale_input</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="mi">3600</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xaxis_scale_input</span><span class="o">.</span><span class="n">setSingleStep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">xsize</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">get_x_axis_size</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xaxis_scale_input</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">xsize</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xaxis_scale_input</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;xaxis_scale_input&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xaxis_scale_input</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># create a save and cancel button, these are built in buttons that emit specific signals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_axis_scale_buttons</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_axis_scale_buttons</span><span class="o">.</span><span class="n">setOrientation</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_axis_scale_buttons</span><span class="o">.</span><span class="n">setStandardButtons</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Cancel</span><span class="o">|</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Save</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_axis_scale_buttons</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;settings_axis_scale_buttons&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings_axis_scale_buttons</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># move the objects over to Dialog and set the text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">retranslateUi</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+
+        <span class="c1"># set what to do when the save button is clicked</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_axis_scale_buttons</span><span class="o">.</span><span class="n">accepted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">Dialog</span><span class="p">))</span>
+
+        <span class="c1"># set what to do when the cancel button is hit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_axis_scale_buttons</span><span class="o">.</span><span class="n">rejected</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">Dialog</span><span class="o">.</span><span class="n">reject</span><span class="p">)</span>
+
+        <span class="c1"># connect the signals and slots by name</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QMetaObject</span><span class="o">.</span><span class="n">connectSlotsByName</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Ui_Dialog.retranslateUi"><a class="viewcode-back" href="../scaleAxesGUI.html#scaleAxesGUI.Ui_Dialog.retranslateUi">[docs]</a>    <span class="k">def</span> <span class="nf">retranslateUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Dialog</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function translates the GUI objects of this class to the passed *Dialog* objcect,</span>
+<span class="sd">        then sets the text of the various objects in the window.</span>
+
+<span class="sd">        :param Dialog: This must be of type PyQt5.QtWidgets.QDialog.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># rename the function for readability</span>
+        <span class="n">_translate</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QCoreApplication</span><span class="o">.</span><span class="n">translate</span>
+
+        <span class="c1"># set the window title and label text</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Dialog&quot;</span><span class="p">,</span> <span class="s2">&quot;Settings - Scale Axes&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_2</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Dialog&quot;</span><span class="p">,</span> <span class="s2">&quot;Y-Axis, Min.&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Dialog&quot;</span><span class="p">,</span> <span class="s2">&quot;X-Axis, total time in seconds that the window will show.&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_3</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Dialog&quot;</span><span class="p">,</span> <span class="s2">&quot;Y-Axis, Max.&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Ui_Dialog.save"><a class="viewcode-back" href="../scaleAxesGUI.html#scaleAxesGUI.Ui_Dialog.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Dialog</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function saves the inputs and closes the window.</span>
+
+<span class="sd">        :param Dialog: This must be of type PyQt5.QtWidgets.QDialog.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># grab the values from each input box</span>
+        <span class="n">xsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xaxis_scale_input</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="n">ymin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">yaxis_min_input</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="n">ymax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">yaxis_max_input</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+
+        <span class="c1"># save them</span>
+        <span class="n">set_x_axis_size</span><span class="p">(</span><span class="n">xsize</span><span class="p">)</span>
+        <span class="n">set_y_axis_min</span><span class="p">(</span><span class="n">ymin</span><span class="p">)</span>
+        <span class="n">set_y_axis_max</span><span class="p">(</span><span class="n">ymax</span><span class="p">)</span>
+
+        <span class="c1"># close the window</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">Dialog</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">()</span>
+    <span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_Dialog</span><span class="p">()</span>
+    <span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+    <span class="n">Dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Michael Eller
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

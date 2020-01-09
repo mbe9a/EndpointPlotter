@@ -1,0 +1,469 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>settings_interface module &mdash; Oxford Endpoint Plotter 0.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="windowFilterGUI module" href="windowFilterGUI.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Oxford Endpoint Plotter
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">EndpointPlotter</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mainWindow.html">mainWindow module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plotGUI.html">plotGUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="animation.html">animation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="portsGUI.html">portsGUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sampRateGUI.html">sampRateGUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scaleAxesGUI.html">scaleAxesGUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="windowFilterGUI.html">windowFilterGUI module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">settings_interface module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Oxford Endpoint Plotter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">EndpointPlotter</a> &raquo;</li>
+        
+      <li>settings_interface module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/settings_interface.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-settings_interface">
+<span id="settings-interface-module"></span><h1>settings_interface module<a class="headerlink" href="#module-settings_interface" title="Permalink to this headline">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">platform</dt>
+<dd class="field-odd"><p>Unix, Windows</p>
+</dd>
+<dt class="field-even">synopsis</dt>
+<dd class="field-even"><p>This module contains all get/set methods for settings.
+It’s not particularly interesting but facilitates clean code.</p>
+</dd>
+<dt class="field-odd">moduleauthor</dt>
+<dd class="field-odd"><p>Michael Eller &lt;<a class="reference external" href="mailto:mbe9a&#37;&#52;&#48;virginia&#46;edu">mbe9a<span>&#64;</span>virginia<span>&#46;</span>edu</a>&gt;</p>
+</dd>
+</dl>
+<dl class="data">
+<dt id="settings_interface.fieldnames">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">fieldnames</code><em class="property"> = ['window_samples', 'sample_rate', 'x_axis_size', 'y_axis_min', 'y_axis_max']</em><a class="headerlink" href="#settings_interface.fieldnames" title="Permalink to this definition">¶</a></dt>
+<dd><p>static fieldnames for the settings dict / csv file</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="settings_interface.default_window_samples">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">default_window_samples</code><em class="property"> = 1</em><a class="headerlink" href="#settings_interface.default_window_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>default number of samples to average in a moving average filter</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="settings_interface.default_sample_rate">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">default_sample_rate</code><em class="property"> = 10</em><a class="headerlink" href="#settings_interface.default_sample_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>default sample rate in samples / sec</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="settings_interface.default_x_axis_size">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">default_x_axis_size</code><em class="property"> = 30</em><a class="headerlink" href="#settings_interface.default_x_axis_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>default x axis range in seconds</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="settings_interface.default_y_axis_min">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">default_y_axis_min</code><em class="property"> = 0</em><a class="headerlink" href="#settings_interface.default_y_axis_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>default y-axis minimum in volts</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="settings_interface.default_y_axis_max">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">default_y_axis_max</code><em class="property"> = 60</em><a class="headerlink" href="#settings_interface.default_y_axis_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>default y-axis maximum in volts</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="settings_interface.m1">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">m1</code><em class="property"> = 14.3</em><a class="headerlink" href="#settings_interface.m1" title="Permalink to this definition">¶</a></dt>
+<dd><p>slope of V_measured vs. V_in for V_in &lt; 10 V</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="settings_interface.b1">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">b1</code><em class="property"> = -1</em><a class="headerlink" href="#settings_interface.b1" title="Permalink to this definition">¶</a></dt>
+<dd><p>intercept of V_measured vs. V_in for V_in &lt; 10 V</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="settings_interface.m2">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">m2</code><em class="property"> = 14.976</em><a class="headerlink" href="#settings_interface.m2" title="Permalink to this definition">¶</a></dt>
+<dd><p>slope of V_measured vs. V_in for V_in &gt; 10 V</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="settings_interface.b2">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">b2</code><em class="property"> = -3.7</em><a class="headerlink" href="#settings_interface.b2" title="Permalink to this definition">¶</a></dt>
+<dd><p>slope of V_measured vs. V_in for V_in &gt; 10 V</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.generate_plotting_configuration_file">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">generate_plotting_configuration_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#generate_plotting_configuration_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.generate_plotting_configuration_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Will write a new plot configuration (settings) file in the appropriate location.
+This will overwrite any existing settings.
+This is used when the user restores default settings from within the GUI.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.read_plotting_configuration">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">read_plotting_configuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#read_plotting_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.read_plotting_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the current settings configuration. If the file doesn’t exist, generate the default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Dict object containing the GUI’s settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.save_plotting_configuration">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">save_plotting_configuration</code><span class="sig-paren">(</span><em class="sig-param">settings</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#save_plotting_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.save_plotting_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will edit the file based on the dict of settings passed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>settings</strong> – Dict of settings</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.set_window_samples">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">set_window_samples</code><span class="sig-paren">(</span><em class="sig-param">num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#set_window_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.set_window_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the number of samples to use in the moving average filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>num</strong> – number of samples</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>bool indicating whether or not the operation was successful</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.get_window_samples">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">get_window_samples</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#get_window_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.get_window_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the saved window samples setting from the file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>saved window samples</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.set_sample_rate">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">set_sample_rate</code><span class="sig-paren">(</span><em class="sig-param">rate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#set_sample_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.set_sample_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the sample rate and save it in the settings file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rate</strong> – ADC sample rate in samples per second. 1 &lt; rate &lt; 100.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>bool indicating whether or not the operation was successful.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.get_sample_rate">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">get_sample_rate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#get_sample_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.get_sample_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the saved ADC sample rate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the ADC sample rate (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.set_x_axis_size">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">set_x_axis_size</code><span class="sig-paren">(</span><em class="sig-param">size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#set_x_axis_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.set_x_axis_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the total width of the live plot in seconds. The number of samples depends on this and the sample rate.
+Total number of samples in the plot is equal to the x-axis size * sample rate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>size</strong> – x-axis size in seconds. 5 &lt; int(size) &lt; 3600.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>bool indicating whether or not the operation was successful.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.get_x_axis_size">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">get_x_axis_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#get_x_axis_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.get_x_axis_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the x-axis length in seconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>x-axis size (int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.set_y_axis_min">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">set_y_axis_min</code><span class="sig-paren">(</span><em class="sig-param">minimum</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#set_y_axis_min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.set_y_axis_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the lower limit of the y-axis data in volts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>minimum</strong> – lower limit of data y-axis. -60 &lt; minimum &lt; 69.9</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>bool indicating if the operation was so successful or not</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.get_y_axis_min">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">get_y_axis_min</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#get_y_axis_min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.get_y_axis_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the y-axis lower limit in volts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>y-axis minimum (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.set_y_axis_max">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">set_y_axis_max</code><span class="sig-paren">(</span><em class="sig-param">maximum</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#set_y_axis_max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.set_y_axis_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the upper limit of the y-axis in volts. 1 &lt; maximum &lt; 70</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>maximum</strong> – upper limit of the y-axis in volts</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>bool indicating whether or not the operation was successful</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.get_y_axis_max">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">get_y_axis_max</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#get_y_axis_max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.get_y_axis_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the y-axis upper limit in volts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the y-axis maximum (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.save_port_configuration">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">save_port_configuration</code><span class="sig-paren">(</span><em class="sig-param">port</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#save_port_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.save_port_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function sets the separate file that indicates which serial port to use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>port</strong> – ADC serial port (string)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.read_port_configuration">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">read_port_configuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#read_port_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.read_port_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the saved ADC serial port.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>serial port (string)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="settings_interface.restore_defaults">
+<code class="sig-prename descclassname">settings_interface.</code><code class="sig-name descname">restore_defaults</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/settings_interface.html#restore_defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#settings_interface.restore_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function resets all settings to the defaults stored in this file.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="windowFilterGUI.html" class="btn btn-neutral float-left" title="windowFilterGUI module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Michael Eller
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

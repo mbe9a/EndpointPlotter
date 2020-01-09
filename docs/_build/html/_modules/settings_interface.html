@@ -1,0 +1,488 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>settings_interface &mdash; Oxford Endpoint Plotter 0.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Oxford Endpoint Plotter
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">EndpointPlotter</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Oxford Endpoint Plotter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>settings_interface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for settings_interface</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:platform: Unix, Windows</span>
+<span class="sd">:synopsis: This module contains all get/set methods for settings.</span>
+<span class="sd">            It&#39;s not particularly interesting but facilitates clean code.</span>
+<span class="sd">:moduleauthor: Michael Eller &lt;mbe9a@virginia.edu&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1">#: static fieldnames for the settings dict / csv file</span>
+<span class="n">fieldnames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;window_samples&quot;</span><span class="p">,</span> <span class="s2">&quot;sample_rate&quot;</span><span class="p">,</span> <span class="s2">&quot;x_axis_size&quot;</span><span class="p">,</span> <span class="s2">&quot;y_axis_min&quot;</span><span class="p">,</span> <span class="s2">&quot;y_axis_max&quot;</span><span class="p">]</span>
+
+<span class="c1">#: default number of samples to average in a moving average filter</span>
+<span class="n">default_window_samples</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1">#: default sample rate in samples / sec</span>
+<span class="n">default_sample_rate</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1">#: default x axis range in seconds</span>
+<span class="n">default_x_axis_size</span> <span class="o">=</span> <span class="mi">30</span>
+
+<span class="c1">#: default y-axis minimum in volts</span>
+<span class="n">default_y_axis_min</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1">#: default y-axis maximum in volts</span>
+<span class="n">default_y_axis_max</span> <span class="o">=</span> <span class="mi">60</span>
+
+<span class="c1">#: slope of V_measured vs. V_in for V_in &lt; 10 V</span>
+<span class="n">m1</span> <span class="o">=</span> <span class="mf">14.3</span>
+
+<span class="c1">#: intercept of V_measured vs. V_in for V_in &lt; 10 V</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="c1">#: slope of V_measured vs. V_in for V_in &gt; 10 V</span>
+<span class="n">m2</span> <span class="o">=</span> <span class="mf">14.976</span>
+
+<span class="c1">#: slope of V_measured vs. V_in for V_in &gt; 10 V</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.7</span>
+
+
+<div class="viewcode-block" id="generate_plotting_configuration_file"><a class="viewcode-back" href="../settings_interface.html#settings_interface.generate_plotting_configuration_file">[docs]</a><span class="k">def</span> <span class="nf">generate_plotting_configuration_file</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Will write a new plot configuration (settings) file in the appropriate location.</span>
+<span class="sd">    This will overwrite any existing settings.</span>
+<span class="sd">    This is used when the user restores default settings from within the GUI.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># open and write a csv file with the default settings</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;resources/plot_configuration.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictWriter</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">fieldnames</span><span class="p">)</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">({</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">default_window_samples</span><span class="p">,</span> <span class="n">fieldnames</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">default_sample_rate</span><span class="p">,</span>
+                         <span class="n">fieldnames</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">default_x_axis_size</span><span class="p">,</span> <span class="n">fieldnames</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">default_y_axis_min</span><span class="p">,</span>
+                         <span class="n">fieldnames</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">default_y_axis_max</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="read_plotting_configuration"><a class="viewcode-back" href="../settings_interface.html#settings_interface.read_plotting_configuration">[docs]</a><span class="k">def</span> <span class="nf">read_plotting_configuration</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read the current settings configuration. If the file doesn&#39;t exist, generate the default.</span>
+
+<span class="sd">    :return: Dict object containing the GUI&#39;s settings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># check if the file exists</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;resources/plot_configuration.csv&quot;</span><span class="p">):</span>
+        <span class="c1"># generate the default settings if it doesn&#39;t exist</span>
+        <span class="n">generate_plotting_configuration_file</span><span class="p">()</span>
+
+    <span class="c1"># read the settings into a dict object</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;resources/plot_configuration.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">fieldnames</span><span class="p">)</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">settings</span></div>
+
+
+<div class="viewcode-block" id="save_plotting_configuration"><a class="viewcode-back" href="../settings_interface.html#settings_interface.save_plotting_configuration">[docs]</a><span class="k">def</span> <span class="nf">save_plotting_configuration</span><span class="p">(</span><span class="n">settings</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will edit the file based on the dict of settings passed.</span>
+
+<span class="sd">    :param settings: Dict of settings</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># open the file and overwrite with the settings dict</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;resources/plot_configuration.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictWriter</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">fieldnames</span><span class="p">)</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">({</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">settings</span><span class="p">[</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">fieldnames</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">settings</span><span class="p">[</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                         <span class="n">fieldnames</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">settings</span><span class="p">[</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span> <span class="n">fieldnames</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">settings</span><span class="p">[</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">3</span><span class="p">]],</span>
+                         <span class="n">fieldnames</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">settings</span><span class="p">[</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">4</span><span class="p">]]})</span></div>
+
+
+<div class="viewcode-block" id="set_window_samples"><a class="viewcode-back" href="../settings_interface.html#settings_interface.set_window_samples">[docs]</a><span class="k">def</span> <span class="nf">set_window_samples</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sets the number of samples to use in the moving average filter.</span>
+
+<span class="sd">    :param num: number of samples</span>
+<span class="sd">    :return: bool indicating whether or not the operation was successful</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># check if num is within limits</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># get the current settings</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">read_plotting_configuration</span><span class="p">()</span>
+    <span class="c1"># alter the window samples setting</span>
+    <span class="n">settings</span><span class="p">[</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">num</span>
+    <span class="c1"># save it</span>
+    <span class="n">save_plotting_configuration</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="get_window_samples"><a class="viewcode-back" href="../settings_interface.html#settings_interface.get_window_samples">[docs]</a><span class="k">def</span> <span class="nf">get_window_samples</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read the saved window samples setting from the file.</span>
+
+<span class="sd">    :return: saved window samples</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># read in the file</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">read_plotting_configuration</span><span class="p">()</span>
+    <span class="c1"># get the window samples</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">num</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="set_sample_rate"><a class="viewcode-back" href="../settings_interface.html#settings_interface.set_sample_rate">[docs]</a><span class="k">def</span> <span class="nf">set_sample_rate</span><span class="p">(</span><span class="n">rate</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set the sample rate and save it in the settings file.</span>
+
+<span class="sd">    :param rate: ADC sample rate in samples per second. 1 &lt; rate &lt; 100.</span>
+<span class="sd">    :return: bool indicating whether or not the operation was successful.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># check if the number is in the allowed range</span>
+    <span class="k">if</span> <span class="n">rate</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">rate</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># read in the file</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">read_plotting_configuration</span><span class="p">()</span>
+    <span class="c1"># set the sample rate portion</span>
+    <span class="n">settings</span><span class="p">[</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">rate</span>
+    <span class="c1"># rewrite the file with the new settings</span>
+    <span class="n">save_plotting_configuration</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="get_sample_rate"><a class="viewcode-back" href="../settings_interface.html#settings_interface.get_sample_rate">[docs]</a><span class="k">def</span> <span class="nf">get_sample_rate</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the saved ADC sample rate.</span>
+
+<span class="sd">    :return: the ADC sample rate (float)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># read in the file</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">read_plotting_configuration</span><span class="p">()</span>
+    <span class="c1"># get the sample rate portion and return it</span>
+    <span class="n">rate</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">rate</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="set_x_axis_size"><a class="viewcode-back" href="../settings_interface.html#settings_interface.set_x_axis_size">[docs]</a><span class="k">def</span> <span class="nf">set_x_axis_size</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set the total width of the live plot in seconds. The number of samples depends on this and the sample rate.</span>
+<span class="sd">    Total number of samples in the plot is equal to the x-axis size * sample rate.</span>
+
+<span class="sd">    :param size: x-axis size in seconds. 5 &lt; int(size) &lt; 3600.</span>
+<span class="sd">    :return: bool indicating whether or not the operation was successful.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># check if the input is in the correct range</span>
+    <span class="k">if</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="mi">5</span> <span class="ow">or</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">3660</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># read in the file</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">read_plotting_configuration</span><span class="p">()</span>
+    <span class="c1"># set the x-axis size setting</span>
+    <span class="n">settings</span><span class="p">[</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">size</span>
+    <span class="c1"># re-write the file</span>
+    <span class="n">save_plotting_configuration</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="get_x_axis_size"><a class="viewcode-back" href="../settings_interface.html#settings_interface.get_x_axis_size">[docs]</a><span class="k">def</span> <span class="nf">get_x_axis_size</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the x-axis length in seconds.</span>
+
+<span class="sd">    :return: x-axis size (int)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># read in the file</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">read_plotting_configuration</span><span class="p">()</span>
+    <span class="c1"># get the size and return it</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="set_y_axis_min"><a class="viewcode-back" href="../settings_interface.html#settings_interface.set_y_axis_min">[docs]</a><span class="k">def</span> <span class="nf">set_y_axis_min</span><span class="p">(</span><span class="n">minimum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set the lower limit of the y-axis data in volts.</span>
+
+<span class="sd">    :param minimum: lower limit of data y-axis. -60 &lt; minimum &lt; 69.9</span>
+<span class="sd">    :return: bool indicating if the operation was so successful or not</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># check if the input is in the correct range</span>
+    <span class="k">if</span> <span class="n">minimum</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">60</span> <span class="ow">or</span> <span class="n">minimum</span> <span class="o">&gt;</span> <span class="mf">69.9</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># read in the file</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">read_plotting_configuration</span><span class="p">()</span>
+    <span class="c1"># set the y-axis minimum in the dict and save it</span>
+    <span class="n">settings</span><span class="p">[</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span> <span class="o">=</span> <span class="n">minimum</span>
+    <span class="n">save_plotting_configuration</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="get_y_axis_min"><a class="viewcode-back" href="../settings_interface.html#settings_interface.get_y_axis_min">[docs]</a><span class="k">def</span> <span class="nf">get_y_axis_min</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the y-axis lower limit in volts.</span>
+
+<span class="sd">    :return: y-axis minimum (float)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># read in the file</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">read_plotting_configuration</span><span class="p">()</span>
+    <span class="c1"># get the y-axis minimum</span>
+    <span class="n">minimum</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">minimum</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="set_y_axis_max"><a class="viewcode-back" href="../settings_interface.html#settings_interface.set_y_axis_max">[docs]</a><span class="k">def</span> <span class="nf">set_y_axis_max</span><span class="p">(</span><span class="n">maximum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set the upper limit of the y-axis in volts. 1 &lt; maximum &lt; 70</span>
+
+<span class="sd">    :param maximum: upper limit of the y-axis in volts</span>
+<span class="sd">    :return: bool indicating whether or not the operation was successful</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># check if it&#39;s in the allowable range</span>
+    <span class="k">if</span> <span class="n">maximum</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">maximum</span> <span class="o">&gt;</span> <span class="mi">70</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># read in the file</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">read_plotting_configuration</span><span class="p">()</span>
+    <span class="c1"># set the y-axis maximum in the dict</span>
+    <span class="n">settings</span><span class="p">[</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">4</span><span class="p">]]</span> <span class="o">=</span> <span class="n">maximum</span>
+    <span class="c1"># save it</span>
+    <span class="n">save_plotting_configuration</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="get_y_axis_max"><a class="viewcode-back" href="../settings_interface.html#settings_interface.get_y_axis_max">[docs]</a><span class="k">def</span> <span class="nf">get_y_axis_max</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the y-axis upper limit in volts.</span>
+
+<span class="sd">    :return: the y-axis maximum (float)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># read in the file</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">read_plotting_configuration</span><span class="p">()</span>
+    <span class="c1"># get the y-axis upper limit</span>
+    <span class="n">maximum</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">4</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">maximum</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="save_port_configuration"><a class="viewcode-back" href="../settings_interface.html#settings_interface.save_port_configuration">[docs]</a><span class="k">def</span> <span class="nf">save_port_configuration</span><span class="p">(</span><span class="n">port</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function sets the separate file that indicates which serial port to use.</span>
+
+<span class="sd">    :param port: ADC serial port (string)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;resources/port_configuration.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
+        <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">port</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="read_port_configuration"><a class="viewcode-back" href="../settings_interface.html#settings_interface.read_port_configuration">[docs]</a><span class="k">def</span> <span class="nf">read_port_configuration</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the saved ADC serial port.</span>
+
+<span class="sd">    :return: serial port (string)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># if it doesn&#39;t exist, return empty string</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;resources/port_configuration.txt&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="c1"># else, read in the port</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;resources/port_configuration.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">infile</span><span class="p">:</span>
+        <span class="n">port</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">port</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="restore_defaults"><a class="viewcode-back" href="../settings_interface.html#settings_interface.restore_defaults">[docs]</a><span class="k">def</span> <span class="nf">restore_defaults</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function resets all settings to the defaults stored in this file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">save_port_configuration</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">generate_plotting_configuration_file</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Michael Eller
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

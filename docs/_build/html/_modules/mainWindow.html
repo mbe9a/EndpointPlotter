@@ -1,0 +1,674 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mainWindow &mdash; Oxford Endpoint Plotter 0.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Oxford Endpoint Plotter
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">EndpointPlotter</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Oxford Endpoint Plotter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>mainWindow</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mainWindow</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:platform: Unix, Windows</span>
+<span class="sd">:synopsis: This is the main module. Run this file to start the GUI.</span>
+<span class="sd">:moduleauthor: Michael Eller &lt;mbe9a@virginia.edu&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">sampRateGUI</span> <span class="kn">import</span> <span class="n">Ui_Dialog</span> <span class="k">as</span> <span class="n">samprateWindow</span>
+<span class="kn">from</span> <span class="nn">scaleAxesGUI</span> <span class="kn">import</span> <span class="n">Ui_Dialog</span> <span class="k">as</span> <span class="n">scaleaxesWindow</span>
+<span class="kn">from</span> <span class="nn">portsGUI</span> <span class="kn">import</span> <span class="n">Ui_Dialog</span> <span class="k">as</span> <span class="n">portsWindow</span>
+<span class="kn">from</span> <span class="nn">plotGUI</span> <span class="kn">import</span> <span class="n">Ui_Dialog</span> <span class="k">as</span> <span class="n">plotWindow</span>
+<span class="kn">from</span> <span class="nn">windowFilterGUI</span> <span class="kn">import</span> <span class="n">Ui_Dialog</span> <span class="k">as</span> <span class="n">windowfilterWindow</span>
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtWidgets</span>
+<span class="kn">from</span> <span class="nn">settings_interface</span> <span class="kn">import</span> <span class="n">restore_defaults</span><span class="p">,</span> <span class="n">read_port_configuration</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">m1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">m2</span>
+<span class="kn">import</span> <span class="nn">serial</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">gc</span>
+
+<span class="c1">#: Member *_serial_port* is a global variable representing the serial connection to the ADC.</span>
+<span class="c1">#: It will be opened when either enabling the LCD display or starting the plot.</span>
+<span class="n">_serial_port</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">(</span><span class="n">baudrate</span><span class="o">=</span><span class="mi">9600</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Ui_MainWindow"><a class="viewcode-back" href="../mainWindow.html#mainWindow.Ui_MainWindow">[docs]</a><span class="k">class</span> <span class="nc">Ui_MainWindow</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The graphical structure of *Ui_MainWindow* was generated by QtDesigner. The window contains a settings menu,</span>
+<span class="sd">    LCD display, and a button to launch a live plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Ui_MainWindow.setupUi"><a class="viewcode-back" href="../mainWindow.html#mainWindow.Ui_MainWindow.setupUi">[docs]</a>    <span class="k">def</span> <span class="nf">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">MainWindow</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function initializes the window by altering the *MainWindow* object passed (by reference) to it.</span>
+
+<span class="sd">        :param MainWindow: this must be of type PyQt5.QtWidgets.QMainWindow</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">MainWindow</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;MainWindow&quot;</span><span class="p">)</span>
+        <span class="n">MainWindow</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+        <span class="n">MainWindow</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s1">&#39;resources/uva.ico&#39;</span><span class="p">))</span>
+
+        <span class="c1"># set central widget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">centralwidget</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QWidget</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">centralwidget</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;centralwidget&quot;</span><span class="p">)</span>
+        <span class="n">MainWindow</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">centralwidget</span><span class="p">)</span>
+
+        <span class="c1"># make a grid layout</span>
+        <span class="c1"># grid layouts allow the window to be resized easily</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">centralwidget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;gridLayout&quot;</span><span class="p">)</span>
+
+        <span class="c1"># the following spacer items organize the objects in the window nicely</span>
+        <span class="n">spacerItem</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacerItem</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">spacerItem1</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacerItem1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">spacerItem2</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacerItem2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">spacerItem3</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacerItem3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">spacerItem4</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacerItem4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">spacerItem5</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacerItem5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># make a label for the LCD display</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">centralwidget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">)</span>
+
+        <span class="c1"># make the button that launches the live plot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_btn</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">centralwidget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_btn</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;plot_btn&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_btn</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># connect the button click event to the show_plot() function in this class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">show_plot</span><span class="p">)</span>
+
+        <span class="c1"># create the LCD display</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lcdNumber</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLCDNumber</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">centralwidget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lcdNumber</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;lcdNumber&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lcdNumber</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># set the colors</span>
+        <span class="n">palette</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lcdNumber</span><span class="o">.</span><span class="n">palette</span><span class="p">()</span>
+        <span class="n">palette</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">palette</span><span class="o">.</span><span class="n">Background</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">palette</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">palette</span><span class="o">.</span><span class="n">Dark</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lcdNumber</span><span class="o">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">palette</span><span class="p">)</span>
+
+        <span class="c1"># create a checkbox to enable or disable the LCD display functionality</span>
+        <span class="c1"># this serves as the trigger to open and close the serial connection to the ADC</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkBoxEnable</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">centralwidget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkBoxEnable</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;checkBoxEnable&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checkBoxEnable</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># connect the checkbox click event to the toggle_timer() function in this class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkBoxEnable</span><span class="o">.</span><span class="n">stateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggle_timer</span><span class="p">)</span>
+
+        <span class="c1"># create the statusbar, which holds the menu items</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statusbar</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QStatusBar</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statusbar</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;statusbar&quot;</span><span class="p">)</span>
+        <span class="n">MainWindow</span><span class="o">.</span><span class="n">setStatusBar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">statusbar</span><span class="p">)</span>
+
+        <span class="c1"># make the menubar</span>
+        <span class="c1"># contains settings options and exit button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menubar</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMenuBar</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menubar</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">516</span><span class="p">,</span> <span class="mi">26</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menubar</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;menubar&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuMain_Menu</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menubar</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuMain_Menu</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;menuMain_Menu&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuSettings</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menuMain_Menu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuSettings</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;menuSettings&quot;</span><span class="p">)</span>
+        <span class="n">MainWindow</span><span class="o">.</span><span class="n">setMenuBar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menubar</span><span class="p">)</span>
+
+        <span class="c1"># create the Exit menu item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionExit</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionExit</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;actionExit&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionExit</span><span class="o">.</span><span class="n">setStatusTip</span><span class="p">(</span><span class="s1">&#39;Exit application&#39;</span><span class="p">)</span>
+        <span class="c1"># connect the action to the quit function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionExit</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
+
+        <span class="c1"># create the Sample Rate submenu settings item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSample_Rate</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSample_Rate</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;actionSample_Rate&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSample_Rate</span><span class="o">.</span><span class="n">setStatusTip</span><span class="p">(</span><span class="s1">&#39;Set the plotter</span><span class="se">\&#39;</span><span class="s1">s sample rate&#39;</span><span class="p">)</span>
+        <span class="c1"># connect the action to the function open_settings_sample_rate()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSample_Rate</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">open_settings_sample_rate</span><span class="p">)</span>
+
+        <span class="c1"># create the Scale Axes submenu settings item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionScale_Axes</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionScale_Axes</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;actionScale_Axes&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionScale_Axes</span><span class="o">.</span><span class="n">setStatusTip</span><span class="p">(</span><span class="s1">&#39;Set the plotter</span><span class="se">\&#39;</span><span class="s1">s x-axis and y-axis limits&#39;</span><span class="p">)</span>
+        <span class="c1"># connect the action to the function open_settings_scale_axes()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionScale_Axes</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">open_settings_scale_axes</span><span class="p">)</span>
+
+        <span class="c1"># create the Port Connection submenu settings item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionPort_Connection</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionPort_Connection</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;actionPort_Connection&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionPort_Connection</span><span class="o">.</span><span class="n">setStatusTip</span><span class="p">(</span><span class="s1">&#39;Set the serial port connection for data acquisition&#39;</span><span class="p">)</span>
+        <span class="c1"># connect the action to the function open_settings_port()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionPort_Connection</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">open_settings_port</span><span class="p">)</span>
+
+        <span class="c1"># create the Window Filter submenu settings item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionWindow_Filter</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionWindow_Filter</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;actionWindow_Filter&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionWindow_Filter</span><span class="o">.</span><span class="n">setStatusTip</span><span class="p">(</span><span class="s1">&#39;Set the number of samples to use in a moving average&#39;</span><span class="p">)</span>
+        <span class="c1"># connect the action to the function open_settings_filter()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionWindow_Filter</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">open_settings_filter</span><span class="p">)</span>
+
+        <span class="c1"># create the Restore Defaults submenu settings item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionRestore_Defaults</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionRestore_Defaults</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;actionWindow_Filter&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionRestore_Defaults</span><span class="o">.</span><span class="n">setStatusTip</span><span class="p">(</span><span class="s1">&#39;Set the number of samples to use in a moving average&#39;</span><span class="p">)</span>
+        <span class="c1"># connect the action to the function restore_defaults() from settings_interface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionRestore_Defaults</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">restore_defaults</span><span class="p">)</span>
+
+        <span class="c1"># add all these actions to the menu with separators for a clean look</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuSettings</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionWindow_Filter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuSettings</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionSample_Rate</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuSettings</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionScale_Axes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuSettings</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionPort_Connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuSettings</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuSettings</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionRestore_Defaults</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuMain_Menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menuSettings</span><span class="o">.</span><span class="n">menuAction</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuMain_Menu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuMain_Menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionExit</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menubar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menuMain_Menu</span><span class="o">.</span><span class="n">menuAction</span><span class="p">())</span>
+
+        <span class="c1"># create a popup message that will alert the user when the serial port is not set</span>
+        <span class="c1"># if the port is not set or set correctly, the program will crash</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Warning</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Serial Port Not Set!&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">setInformativeText</span><span class="p">(</span><span class="s2">&quot;Please use the menu to set the serial port connection before &quot;</span>
+                                    <span class="s2">&quot;attempting to display the endpoint signal.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Warning&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s1">&#39;resources/gear.ico&#39;</span><span class="p">))</span>
+
+        <span class="c1"># Windows does not play well with Python threading or multiprocessing, so</span>
+        <span class="c1"># using the built in QTimer object to trigger a function periodically is far easier.</span>
+        <span class="c1"># This timer is used to update the LCD with the ADC value every 1s.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QTimer</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">setSingleShot</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># connect the timer trigger to the function update_display()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">timeout</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_display</span><span class="p">)</span>
+
+        <span class="c1"># this attribute describes whether or not the port has ben set</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port_set</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># check to see if the user has set a port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_port</span><span class="p">()</span>
+
+        <span class="c1"># this function translates all the objects created here and sets all the text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">retranslateUi</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">)</span>
+
+        <span class="c1"># make sure we connect the *MainWindow*&#39;s signals to their corresponding slots</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QMetaObject</span><span class="o">.</span><span class="n">connectSlotsByName</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Ui_MainWindow.retranslateUi"><a class="viewcode-back" href="../mainWindow.html#mainWindow.Ui_MainWindow.retranslateUi">[docs]</a>    <span class="k">def</span> <span class="nf">retranslateUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">MainWindow</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function translates the GUI objects of this class to the passed *MainWindow* objcect,</span>
+<span class="sd">        then sets the text of the various objects in the main window.</span>
+
+<span class="sd">        :param MainWindow: this must be of type PyQt5.QtWidgets.QMainWindow</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># rename the translate function for readability</span>
+        <span class="n">_translate</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QCoreApplication</span><span class="o">.</span><span class="n">translate</span>
+
+        <span class="c1"># main window title</span>
+        <span class="n">MainWindow</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s2">&quot;Oxford Endpoint Plotter&quot;</span><span class="p">))</span>
+
+        <span class="c1"># label above the LCD</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s2">&quot;Endpoint Signal&quot;</span><span class="p">))</span>
+
+        <span class="c1"># plot button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_btn</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s2">&quot;Plot&quot;</span><span class="p">))</span>
+        <span class="n">font</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_btn</span><span class="o">.</span><span class="n">font</span><span class="p">()</span>
+        <span class="n">font</span><span class="o">.</span><span class="n">setPointSize</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_btn</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">font</span><span class="p">)</span>
+
+        <span class="c1"># label for LCD check box</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkBoxEnable</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s2">&quot;Enable&quot;</span><span class="p">))</span>
+
+        <span class="c1"># set menu text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuMain_Menu</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s2">&quot;Menu&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuSettings</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s2">&quot;Settings&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionExit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s2">&quot;Exit&quot;</span><span class="p">))</span>
+
+        <span class="c1"># settings submenu text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSample_Rate</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s2">&quot;Sample Rate&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionScale_Axes</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s2">&quot;Scale Axes&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionWindow_Filter</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s2">&quot;Window Filter&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionPort_Connection</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s2">&quot;Port Connection&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionRestore_Defaults</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s2">&quot;Restore Defaults&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Ui_MainWindow.check_port"><a class="viewcode-back" href="../mainWindow.html#mainWindow.Ui_MainWindow.check_port">[docs]</a>    <span class="k">def</span> <span class="nf">check_port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks to see if the user has set a port. If not, the user will not be able to start the live plot or LCD.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># get the port string from the saved settings</span>
+        <span class="c1"># this will be a string</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">read_port_configuration</span><span class="p">()</span>
+
+        <span class="c1"># get _serial_port from global context</span>
+        <span class="k">global</span> <span class="n">_serial_port</span>
+
+        <span class="c1"># if the port settings is set</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># open the port</span>
+            <span class="n">_serial_port</span><span class="o">.</span><span class="n">setPort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">port_set</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># display the warning message</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">port_set</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Ui_MainWindow.open_settings_filter"><a class="viewcode-back" href="../mainWindow.html#mainWindow.Ui_MainWindow.open_settings_filter">[docs]</a>    <span class="k">def</span> <span class="nf">open_settings_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function spawns an instance of *windowFilterGUI.Ui_Dialog*. This is triggered by</span>
+<span class="sd">        clicking Menu &gt; Settings &gt; Window Filter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># set it up</span>
+        <span class="n">Dialog</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">()</span>
+        <span class="n">ui</span> <span class="o">=</span> <span class="n">windowfilterWindow</span><span class="p">()</span>
+        <span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+
+        <span class="c1"># disable the button, so users can&#39;t open more than one window of this type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionWindow_Filter</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># run it</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="c1"># re-enable the button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionWindow_Filter</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># free up some memory</span>
+        <span class="k">del</span> <span class="n">ui</span><span class="p">,</span> <span class="n">Dialog</span>
+        <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Ui_MainWindow.open_settings_sample_rate"><a class="viewcode-back" href="../mainWindow.html#mainWindow.Ui_MainWindow.open_settings_sample_rate">[docs]</a>    <span class="k">def</span> <span class="nf">open_settings_sample_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function spawns an instance of *sampRateGUI.Ui_Dialog*. This is triggered by</span>
+<span class="sd">        clicking Menu &gt; Settings &gt; Sample Rate.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># set it up</span>
+        <span class="n">Dialog</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">()</span>
+        <span class="n">ui</span> <span class="o">=</span> <span class="n">samprateWindow</span><span class="p">()</span>
+        <span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+
+        <span class="c1"># disable the button, so users can&#39;t open more than one window of this type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSample_Rate</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># run it</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="c1"># re-enable the button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSample_Rate</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># free up some memory</span>
+        <span class="k">del</span> <span class="n">ui</span><span class="p">,</span> <span class="n">Dialog</span>
+        <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Ui_MainWindow.open_settings_scale_axes"><a class="viewcode-back" href="../mainWindow.html#mainWindow.Ui_MainWindow.open_settings_scale_axes">[docs]</a>    <span class="k">def</span> <span class="nf">open_settings_scale_axes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function spawns an instance of *scaleAxesGUI.Ui_Dialog*. This is triggered by</span>
+<span class="sd">        clicking Menu &gt; Settings &gt; Scale Axes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># set it up</span>
+        <span class="n">Dialog</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">()</span>
+        <span class="n">ui</span> <span class="o">=</span> <span class="n">scaleaxesWindow</span><span class="p">()</span>
+        <span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+
+        <span class="c1"># disable the button, so users can&#39;t open more than one window of this type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionScale_Axes</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># run it</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="c1"># re-enable the button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionScale_Axes</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># free up some memory</span>
+        <span class="k">del</span> <span class="n">ui</span><span class="p">,</span> <span class="n">Dialog</span>
+        <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Ui_MainWindow.open_settings_port"><a class="viewcode-back" href="../mainWindow.html#mainWindow.Ui_MainWindow.open_settings_port">[docs]</a>    <span class="k">def</span> <span class="nf">open_settings_port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function spawns an instance of *portsGUI.Ui_Dialog*. This is triggered by</span>
+<span class="sd">        clicking Menu &gt; Settings &gt; Port Connection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># set it up</span>
+        <span class="n">Dialog</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">()</span>
+        <span class="n">ui</span> <span class="o">=</span> <span class="n">portsWindow</span><span class="p">()</span>
+        <span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+
+        <span class="c1"># disable the button, so users can&#39;t open more than one window of this type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionPort_Connection</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># run it</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="c1"># re-enable the button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionPort_Connection</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># free up some memory</span>
+        <span class="k">del</span> <span class="n">ui</span><span class="p">,</span> <span class="n">Dialog</span>
+        <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+
+        <span class="c1"># check if the user has set the port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_port</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Ui_MainWindow.show_plot"><a class="viewcode-back" href="../mainWindow.html#mainWindow.Ui_MainWindow.show_plot">[docs]</a>    <span class="k">def</span> <span class="nf">show_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function spawns an instance of *plotGUI.Ui_Dialog*. It is triggered by</span>
+<span class="sd">        the user clicking the large &#39;Plot&#39; button.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># if the user has not set the port, do not start the plot and open the warning message</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">port_set</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="c1"># free up some memory if we can, this is probably redundant</span>
+        <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+
+        <span class="c1"># set it up</span>
+        <span class="n">Dialog</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">()</span>
+        <span class="n">ui</span> <span class="o">=</span> <span class="n">plotWindow</span><span class="p">()</span>
+        <span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+
+        <span class="c1"># disable the settings buttons that aren&#39;t able to change during plotting.</span>
+        <span class="c1"># also disable the plot button and check box because only one connection to the</span>
+        <span class="c1"># serial port is allowed at any given time.</span>
+        <span class="c1"># the program will crash if the user tries to open the port while it&#39;s already being used.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_btn</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkBoxEnable</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionPort_Connection</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSample_Rate</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionRestore_Defaults</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># run it</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="c1"># re-enable the buttons</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_btn</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkBoxEnable</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionPort_Connection</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSample_Rate</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionRestore_Defaults</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># free up some memory - this is critical.</span>
+        <span class="c1"># if this is not done and blitting is disabled (it is disabled by default),</span>
+        <span class="c1"># you will notice a dramatic degradation in performance with successive calls to this function -&gt;</span>
+        <span class="c1"># i.e. successive creations of plotGUI.Ui_Dialog.</span>
+        <span class="k">del</span> <span class="n">ui</span><span class="p">,</span> <span class="n">Dialog</span>
+        <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Ui_MainWindow.toggle_timer"><a class="viewcode-back" href="../mainWindow.html#mainWindow.Ui_MainWindow.toggle_timer">[docs]</a>    <span class="k">def</span> <span class="nf">toggle_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is triggered on every click of the check box. If the check box is enabled and</span>
+<span class="sd">        the user has set the serial port, this function enables a timer that will update the LCD every 1s.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># get _serial_port from global context</span>
+        <span class="k">global</span> <span class="n">_serial_port</span>
+
+        <span class="c1"># check box is checked</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkBoxEnable</span><span class="o">.</span><span class="n">checkState</span><span class="p">():</span>
+
+            <span class="c1"># if the user hasn&#39;t set the port, uncheck the check box and display the warning message</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">port_set</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">checkBoxEnable</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># open the serial port and start the 1s timer</span>
+                <span class="c1"># on a timer timeout, update_display() will execute</span>
+                <span class="n">_serial_port</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+
+                <span class="c1"># disable the buttons that open the serial port</span>
+                <span class="c1"># the program can only have one open connection to the</span>
+                <span class="c1"># serial port at all times</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plot_btn</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">actionPort_Connection</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># if the check box is unchecked, close the serial port and stop the timer</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_serial_port</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+            <span class="c1"># re-enable the buttons</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_btn</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actionPort_Connection</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Ui_MainWindow.update_display"><a class="viewcode-back" href="../mainWindow.html#mainWindow.Ui_MainWindow.update_display">[docs]</a>    <span class="k">def</span> <span class="nf">update_display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function will execute on the 1s timer&#39;s timeout. It will then request the most recent ADC value</span>
+<span class="sd">        from the serial port and display the corrected value on the LCD.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># get _serial_port from the global context</span>
+        <span class="k">global</span> <span class="n">_serial_port</span>
+
+        <span class="c1"># write &#39;a&#39; to the serial port.</span>
+        <span class="c1"># the embedded micro-controller is listening for an &#39;a&#39; over the serial connection.</span>
+        <span class="c1"># Once it receives an &#39;a&#39;, it will send the latest ADC value in response.</span>
+        <span class="c1"># This was done to eliminate the need for a buffer.</span>
+        <span class="n">_serial_port</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+
+        <span class="c1"># read the value from the serial connection</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">_serial_port</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+        <span class="c1"># m1, b1, m2, b2 are the slopes and y-intercepts of a calibration curve split into two segments.</span>
+        <span class="c1"># the calibration curve is more accurate if a slope is calculated at small values</span>
+        <span class="c1"># separately from the large values.</span>
+        <span class="c1"># These numbers correct for two things:</span>
+        <span class="c1">#                   * the resistor ratio in the custom PCB</span>
+        <span class="c1">#                   * turning the ADC value (0-1024) into an actual voltage</span>
+        <span class="c1"># These values can be found in settings_interface module and are extracted from direct measurements.</span>
+
+        <span class="c1"># if the value from the ADC is less than 150 (on a scale of 0-1024 that&#39;s equivalent to about 10V).</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="mi">150</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="p">(</span><span class="n">val</span> <span class="o">-</span> <span class="n">b1</span><span class="p">)</span> <span class="o">/</span> <span class="n">m1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="p">(</span><span class="n">val</span> <span class="o">-</span> <span class="n">b2</span><span class="p">)</span> <span class="o">/</span> <span class="n">m2</span>
+
+        <span class="c1"># display the received and corrected value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lcdNumber</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">val</span><span class="p">)</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">MainWindow</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
+    <span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_MainWindow</span><span class="p">()</span>
+    <span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">)</span>
+    <span class="n">MainWindow</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Michael Eller
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
