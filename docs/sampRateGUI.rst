@@ -1,0 +1,7 @@
+sampRateGUI module
+==================
+
+.. automodule:: sampRateGUI
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0ff88dca-a496-4b7e-8eb7-d38dd84c537d" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="1W4zeiaTZpDfXAukgEV078oAHUk" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/docs" />
+    <property name="run.code.analysis.last.selected.profile" value="aDefault" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\MIchael\Dropbox (Arthur-UVA)\ArtGroup\Equipment\Oxford ICP-RIE\Embedded Upgrade - (Mike E)\Documentation\Software\Python\EndpointPlotter\docs" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.mainWindow">
+    <configuration name="mainWindow" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="EndpointPlotter" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mainWindow.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="plotGUI" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="EndpointPlotter" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/plotGUI.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.mainWindow" />
+        <item itemvalue="Python.plotGUI" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0ff88dca-a496-4b7e-8eb7-d38dd84c537d" name="Default Changelist" comment="" />
+      <created>1578423751538</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1578423751538</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1296" y="716" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1578425903622">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="1296" y="716" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/3840.1066.1920.1030/-1920.1069.1920.1040/0.0.3072.1688@0.0.3072.1688" timestamp="1578425903622" />
+    <state x="1316" y="591" key="FileChooserDialogImpl" timestamp="1578431170093">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="1316" y="591" key="FileChooserDialogImpl/3840.1066.1920.1030/-1920.1069.1920.1040/0.0.3072.1688@0.0.3072.1688" timestamp="1578431170093" />
+    <state width="3051" height="304" key="GridCell.Tab.0.bottom" timestamp="1578596280957">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state width="3051" height="304" key="GridCell.Tab.0.bottom/3840.1066.1920.1030/-1920.1069.1920.1040/0.0.3072.1688@0.0.3072.1688" timestamp="1578596280957" />
+    <state width="3051" height="304" key="GridCell.Tab.0.center" timestamp="1578596280956">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state width="3051" height="304" key="GridCell.Tab.0.center/3840.1066.1920.1030/-1920.1069.1920.1040/0.0.3072.1688@0.0.3072.1688" timestamp="1578596280956" />
+    <state width="3051" height="304" key="GridCell.Tab.0.left" timestamp="1578596280956">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state width="3051" height="304" key="GridCell.Tab.0.left/3840.1066.1920.1030/-1920.1069.1920.1040/0.0.3072.1688@0.0.3072.1688" timestamp="1578596280956" />
+    <state width="3051" height="304" key="GridCell.Tab.0.right" timestamp="1578596280957">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state width="3051" height="304" key="GridCell.Tab.0.right/3840.1066.1920.1030/-1920.1069.1920.1040/0.0.3072.1688@0.0.3072.1688" timestamp="1578596280957" />
+    <state width="3051" height="607" key="GridCell.Tab.1.bottom" timestamp="1578545727449">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state width="3051" height="607" key="GridCell.Tab.1.bottom/3840.1066.1920.1030/-1920.1069.1920.1040/0.0.3072.1688@0.0.3072.1688" timestamp="1578545727449" />
+    <state width="3051" height="607" key="GridCell.Tab.1.center" timestamp="1578545727448">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state width="3051" height="607" key="GridCell.Tab.1.center/3840.1066.1920.1030/-1920.1069.1920.1040/0.0.3072.1688@0.0.3072.1688" timestamp="1578545727448" />
+    <state width="3051" height="607" key="GridCell.Tab.1.left" timestamp="1578545727448">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state width="3051" height="607" key="GridCell.Tab.1.left/3840.1066.1920.1030/-1920.1069.1920.1040/0.0.3072.1688@0.0.3072.1688" timestamp="1578545727448" />
+    <state width="3051" height="607" key="GridCell.Tab.1.right" timestamp="1578545727448">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state width="3051" height="607" key="GridCell.Tab.1.right/3840.1066.1920.1030/-1920.1069.1920.1040/0.0.3072.1688@0.0.3072.1688" timestamp="1578545727448" />
+    <state x="1045" y="487" key="SettingsEditor" timestamp="1578426411560">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="1045" y="487" key="SettingsEditor/3840.1066.1920.1030/-1920.1069.1920.1040/0.0.3072.1688@0.0.3072.1688" timestamp="1578426411560" />
+    <state x="1233" y="669" key="com.intellij.ide.util.TipDialog" timestamp="1578426311313">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="1233" y="669" key="com.intellij.ide.util.TipDialog/3840.1066.1920.1030/-1920.1069.1920.1040/0.0.3072.1688@0.0.3072.1688" timestamp="1578426311313" />
+  </component>
+</project>
