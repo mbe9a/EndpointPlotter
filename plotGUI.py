@@ -257,8 +257,10 @@ class Ui_Dialog(object):
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames,
                                     delimiter=',', lineterminator='\n')
             writer.writeheader()
+            # get time scaling factor based on the sample rate
+            interval = float(get_interval())
             for x in range(0, len(self.myFig.all)):
-                writer.writerow({'Time (s)': x, 'Signal (V)': self.myFig.all[x]})
+                writer.writerow({'Time (s)': round(float(x) * interval, 2), 'Signal (V)': self.myFig.all[x]})
 
 
 # You need to setup a signal slot mechanism, to
